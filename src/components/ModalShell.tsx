@@ -6,6 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogDescription,
 } from '@/components/ui/dialog'
 import { cn } from '@/lib/utils'
 
@@ -45,7 +46,9 @@ function ModalShell({
             {title ? (
               <DialogTitle className='text-lg font-semibold text-slate-900'>{title}</DialogTitle>
             ) : null}
-            {subtitle ? <p className='text-sm text-slate-600'>{subtitle}</p> : null}
+            {subtitle ? (
+              <DialogDescription className='text-sm text-slate-600'>{subtitle}</DialogDescription>
+            ) : null}
           </DialogHeader>
         )}
         {children}
