@@ -1,9 +1,16 @@
 import { useState } from 'react'
-import { Check } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { Check, Loader2 } from 'lucide-react'
+
+import { useAuthStore } from '@/store/auth-store'
+import { login as loginService } from '@/modules/auth/service'
 
 const LoginPage = () => {
   const [form, setForm] = useState({ email: '', password: '' })
   const [errors, setErrors] = useState<{ email?: string; password?: string; general?: string }>({})
+  const [isLoading, setIsLoading] = useState(false)
+  const setSession = useAuthStore((s) => s.setSession)
+  const navigate = useNavigate()
 
   const handleChange =
     (field: 'email' | 'password') => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -11,7 +18,7 @@ const LoginPage = () => {
       setErrors((prev) => ({ ...prev, [field]: undefined, general: undefined }))
     }
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const newErrors: { email?: string; password?: string; general?: string } = {}
 
@@ -22,12 +29,23 @@ const LoginPage = () => {
       newErrors.password = 'Este campo es obligatorio'
     }
 
-    if (!newErrors.email && !newErrors.password) {
-      newErrors.general =
-        'Los datos ingresados no coinciden. Por favor, verificá que sean correctos.'
+    if (newErrors.email || newErrors.password) {
+      setErrors(newErrors)
+      return
     }
 
-    setErrors(newErrors)
+    setIsLoading(true)
+    try {
+      const result = await loginService(form.email.trim(), form.password.trim())
+      setSession(result.user, result.token)
+      navigate('/', { replace: true })
+    } catch (err) {
+      setErrors({
+        general: 'Los datos ingresados no coinciden. Por favor, verificá que sean correctos.',
+      })
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const emailHasError = Boolean(errors.email)
@@ -116,9 +134,10 @@ const LoginPage = () => {
 
             <button
               type='submit'
-              className='w-full rounded-2xl bg-[#FF6B35] px-4 py-3 text-base font-semibold text-white shadow-xl shadow-orange-200 transition hover:bg-[#ff5a1d] focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
+              disabled={isLoading}
+              className='w-full rounded-2xl bg-[#FF6B35] px-4 py-3 text-base font-semibold text-white shadow-xl shadow-orange-200 transition hover:bg-[#ff5a1d] focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 disabled:opacity-60 flex items-center justify-center'
             >
-              Iniciar sesión
+              {isLoading ? <Loader2 className='h-5 w-5 animate-spin' /> : 'Iniciar sesión'}
             </button>
           </form>
         </div>

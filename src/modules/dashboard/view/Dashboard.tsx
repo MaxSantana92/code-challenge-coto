@@ -29,6 +29,7 @@ import {
 } from '@/components/ui/table'
 import ContactModal from '@/components/ContactModal'
 import CandidateDetailModal from '@/components/CandidateDetailModal'
+import { useAuthStore } from '@/store/auth-store'
 
 const MOCK_CANDIDATES = [
   {
@@ -77,6 +78,7 @@ function Dashboard() {
   const [technology, setTechnology] = React.useState<string | undefined>()
   const [seniority, setSeniority] = React.useState<string | undefined>()
   const [search, setSearch] = React.useState('')
+  const logout = useAuthStore((s) => s.logout)
 
   const technologyOptions = React.useMemo(
     () => Array.from(new Set(MOCK_CANDIDATES.flatMap((candidate) => candidate.stack))),
@@ -114,7 +116,12 @@ function Dashboard() {
               <span className='text-xs text-white/70'>Talento tech</span>
             </div>
           </div>
-          <Button variant='ghost' size='sm' className='text-white hover:bg-white/10'>
+          <Button
+            variant='ghost'
+            size='sm'
+            className='text-white hover:bg-white/10'
+            onClick={logout}
+          >
             <LogOut className='size-4' />
             <span className='hidden sm:inline'>Cerrar sesión</span>
           </Button>
