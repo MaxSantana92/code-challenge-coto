@@ -44,3 +44,22 @@ Este documento registra el uso de herramientas de IA (ChatGPT/Gemini/Claude) dur
 - Se añadieron estados controlados para email/contraseña y set de errores.
 - Se mostraron textos de error rojos por campo y un mensaje general de credenciales inválidas.
 - Se respetó el estilo mobile-first y el ancho acotado en desktop (tarjeta centrada).
+
+---
+
+## 3. Dashboard de Reclutador (UI + Tabla Responsive)
+
+**Objetivo:** Maquetar la página de Dashboard de reclutador mobile-first usando Tailwind + Shadcn UI, con navbar oscuro, card central con filtros, tabla de candidatos con avatar/badges/acciones y paginación; incluir `MOCK_CANDIDATES` hardcodeado.
+
+**Herramienta:** Cursor (ChatGPT)
+
+### Prompt:
+
+> "Actúa como el 'Agente UI' experto en Tailwind CSS y Shadcn UI.\n> Necesito que maquetes la página `src/pages/Dashboard.tsx` basándote en el diseño de un Dashboard de Reclutador.\n> #### 1. Ten encuenta primero el diseño mobile\n> ### 2. Requerimientos de Datos (Hardcodeados)\n> Crea una constante `MOCK_CANDIDATES` dentro del archivo con 5 usuarios de ejemplo.\n> Estructura de datos:\n> - id: string\n> - name: string (Ej: \"Ana García\")\n> - email: string\n> - date: string (Fecha de ingreso, Ej: \"16/07/2025\")\n> - stack: string[] (Ej: [\"React\", \"Node.js\", \"Python\"])\n> - seniority: string (Ej: \"Senior\", \"Junior\")\n> ... (resto de filtros, tabla, badges, botones y paginación)\n> Genera el código completo del componente `Dashboard` exportado por defecto."
+
+**Aplicación y Ajustes:**
+
+- Se creó `MOCK_CANDIDATES` con 5 usuarios de ejemplo (nombre, email, fecha, stack, seniority).
+- Navbar `bg-slate-900` con CTA ghost, card blanca con header durazno (`bg-orange-50`), filtros con `Select` e `Input`.
+- Tabla `Table` con avatar fallback inicial, badges `secondary` y contador `+X`, botones `outline` y `default` naranja, paginación compacta.
+- Enfoque mobile-first con scroll horizontal en tabla (`overflow-x-auto` en contenedor) para mantener responsividad.
