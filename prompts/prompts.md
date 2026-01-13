@@ -49,7 +49,7 @@ Este documento registra el uso de herramientas de IA (ChatGPT/Gemini/Claude) dur
 
 ## 3. Dashboard de Reclutador (UI + Tabla Responsive)
 
-**Objetivo:** Maquetar la página de Dashboard de reclutador mobile-first usando Tailwind + Shadcn UI, con navbar oscuro, card central con filtros, tabla de candidatos con avatar/badges/acciones y paginación; incluir `MOCK_CANDIDATES` hardcodeado.
+**Objetivo:** Maquetar la página de Dashboard de reclutador mobile-first usando Tailwind + Shadcn UI, con navbar oscuro, card central con filtros, tabla de candidatos con avatar/badges/acciones y paginación; incluir `MOCK_CANDIDATES` hardcodeado (ver `src/modules/dashboard/view/Dashboard.tsx`).
 
 **Herramienta:** Cursor (ChatGPT)
 
@@ -63,3 +63,29 @@ Este documento registra el uso de herramientas de IA (ChatGPT/Gemini/Claude) dur
 - Navbar `bg-slate-900` con CTA ghost, card blanca con header durazno (`bg-orange-50`), filtros con `Select` e `Input`.
 - Tabla `Table` con avatar fallback inicial, badges `secondary` y contador `+X`, botones `outline` y `default` naranja, paginación compacta.
 - Enfoque mobile-first con scroll horizontal en tabla (`overflow-x-auto` en contenedor) para mantener responsividad.
+
+---
+
+## 4. Unificación de modales con `ModalShell`
+
+**Objetivo:** Evitar duplicación de `Dialog` creando un contenedor reutilizable (`ModalShell`) y adaptar `ContactModal` y `CandidateDetailModal` para usarlo, manteniendo el estilo durazno y los triggers existentes en el Dashboard.
+
+**Herramienta:** Cursor (ChatGPT)
+
+### Prompt:
+
+> "podemos hacer un modal global y que solo se le pase el componente hijo? para no tener dos modales distintos y aplicar buenas prácticas de reutlización de componentes"
+>
+> "Implement the plan as specified..."
+
+**Aplicación y Ajustes:**
+
+- Se creó `ModalShell` en `src/components/ModalShell.tsx` con control `open/onOpenChange`, trigger opcional, título/subtítulo y estilos comunes.
+- `ContactModal` (`src/components/ContactModal.tsx`) ahora usa `ModalShell`; mantiene icono y formulario RHF+Zod.
+- `CandidateDetailModal` (`src/components/CandidateDetailModal.tsx`) usa `ModalShell`; conserva layout durazno y stack en badges.
+- Dashboard sigue abriendo “Ver Detalle” y “Contactar” con los mismos triggers.
+
+### Referencia del plan ejecutado
+
+- Plan fuente: `@c:\Users\Max Santana\.cursor\plans\plan_unificar_modales_con_un_modalshell_reutilizable_87fc4bda.plan.md`.
+- Tareas completadas: crear `ModalShell`, refactor de `ContactModal`, refactor de `CandidateDetailModal` y verificación de triggers en Dashboard.
