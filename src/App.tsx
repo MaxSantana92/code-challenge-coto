@@ -2,9 +2,10 @@ import { HashRouter, Route, Routes } from 'react-router-dom'
 
 import './App.css'
 import { Toaster } from '@/components/ui/sonner'
+import { NotFound } from './components/NotFound'
 import LoginPage from './modules/auth/view/login'
 import Dashboard from './modules/dashboard/view/Dashboard'
-import { PrivateRoute, PublicRoute } from './route-guards'
+import { PATHS, PrivateRoute, PublicRoute } from './routes'
 
 function App() {
   return (
@@ -12,12 +13,15 @@ function App() {
       {/* Usamos HashRouter para que las rutas funcionen en GitHub Pages */}
       <Routes>
         <Route element={<PublicRoute />}>
-          <Route path='/login' element={<LoginPage />} />
+          <Route path={PATHS.LOGIN} element={<LoginPage />} />
         </Route>
 
         <Route element={<PrivateRoute />}>
-          <Route path='/' element={<Dashboard />} />
+          <Route path={PATHS.HOME} element={<Dashboard />} />
         </Route>
+
+        {/* Ruta catch-all para páginas no encontradas */}
+        <Route path='*' element={<NotFound />} />
       </Routes>
       <Toaster />
     </HashRouter>

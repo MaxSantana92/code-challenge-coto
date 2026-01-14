@@ -34,7 +34,10 @@ src/
 │   │   └── view/          # Componentes
 │   │       └── components/ # Componentes específicos
 │   └── messages/          # Mensajería
-├── routes/                # Guards y configuración de rutas
+├── routes/                # Rutas centralizadas y route guards
+│   ├── paths.ts           # Constantes de rutas
+│   ├── guards.tsx         # PrivateRoute y PublicRoute
+│   └── index.ts           # Barrel export
 └── store/                 # Estado global (Zustand)
 ```
 
