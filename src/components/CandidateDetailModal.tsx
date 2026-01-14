@@ -35,7 +35,9 @@ function CandidateDetailModal({ candidate, trigger }: CandidateDetailModalProps)
         <div className='flex items-start gap-3'>
           <CalendarDays className='mt-0.5 size-4 text-muted-foreground' aria-hidden />
           <div className='flex flex-col'>
-            <span className='text-xs uppercase tracking-wide text-muted-foreground'>Fecha de ingreso</span>
+            <span className='text-xs uppercase tracking-wide text-muted-foreground'>
+              Fecha de ingreso
+            </span>
             <span className='text-sm text-foreground'>{formatDate(candidate.joined_at)}</span>
           </div>
         </div>
