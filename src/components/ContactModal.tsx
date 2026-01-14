@@ -23,6 +23,7 @@ import {
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { useRolesStore } from '@/store/roles-store'
 
 const contactSchema = z.object({
   message: z.string().min(10, 'El mensaje debe tener al menos 10 caracteres'),
@@ -38,11 +39,13 @@ type ContactModalProps = {
   onOpenChange?: (open: boolean) => void
 }
 
-const roles = ['Frontend Developer', 'Backend Developer', 'QA Automation']
-
 function ContactModal({ trigger, isOpen, onClose, onOpenChange }: ContactModalProps) {
   const [internalOpen, setInternalOpen] = React.useState(false)
   const open = isOpen ?? internalOpen
+  const roles = useRolesStore((s) => s.roles)
+  const loadingRoles = useRolesStore((s) => s.loading)
+  const rolesError = useRolesStore((s) => s.error)
+  const hasRoles = roles.length > 0
 
   const setOpen = React.useCallback(
     (next: boolean) => {
@@ -81,12 +84,12 @@ function ContactModal({ trigger, isOpen, onClose, onOpenChange }: ContactModalPr
       subtitle='Para comenzar a operar.'
     >
       <div className='flex justify-center pb-2'>
-        <div className='flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 text-primary'>
+        <div className='flex h-12 w-12 items-center justify-center rounded-full bg-accent text-primary'>
           <Mail className='size-6' aria-hidden />
         </div>
       </div>
 
-      <div className='rounded-lg bg-orange-50/90 p-4 shadow-[0_8px_20px_rgba(0,0,0,0.04)] sm:p-5'>
+      <div className='rounded-lg bg-card border border-border p-4 shadow-[0_8px_20px_rgba(0,0,0,0.04)] sm:p-5'>
         <Form {...form}>
           <form className='space-y-4' onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
@@ -96,7 +99,11 @@ function ContactModal({ trigger, isOpen, onClose, onOpenChange }: ContactModalPr
                 <FormItem>
                   <FormLabel>Mensaje</FormLabel>
                   <FormControl>
-                    <Textarea placeholder='Ingresá tu mensaje...' className='bg-white' {...field} />
+                    <Textarea
+                      placeholder='Ingresá tu mensaje...'
+                      className='bg-background text-foreground'
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -110,16 +117,46 @@ function ContactModal({ trigger, isOpen, onClose, onOpenChange }: ContactModalPr
                 <FormItem>
                   <FormLabel>Rol a proponer</FormLabel>
                   <FormControl>
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <SelectTrigger className='w-full bg-white'>
-                        <SelectValue placeholder='Seleccioná un rol' />
+                    <Select
+                      onValueChange={field.onChange}
+                      value={field.value}
+                      disabled={loadingRoles || !hasRoles}
+                    >
+                      <SelectTrigger className='w-full bg-background'>
+                        <SelectValue
+                          placeholder={
+                            loadingRoles
+                              ? 'Cargando roles...'
+                              : hasRoles
+                              ? 'Seleccioná un rol'
+                              : 'No hay roles disponibles'
+                          }
+                        />
                       </SelectTrigger>
                       <SelectContent>
-                        {roles.map((role) => (
-                          <SelectItem key={role} value={role}>
-                            {role}
+                        {loadingRoles && (
+                          <SelectItem disabled value='__loading'>
+                            Cargando roles...
                           </SelectItem>
-                        ))}
+                        )}
+                        {rolesError && !loadingRoles && (
+                          <SelectItem disabled value='__error'>
+                            Error al cargar roles
+                          </SelectItem>
+                        )}
+                        {!loadingRoles &&
+                          !rolesError &&
+                          hasRoles &&
+                          roles.map((role) => (
+                            <SelectItem key={role} value={role}>
+                              {role}
+                            </SelectItem>
+                          ))}
+                        {!loadingRoles && !rolesError && !hasRoles && (
+                          <SelectItem disabled value='__empty'>
+                            No hay roles disponibles
+                          </SelectItem>
+                        )}
                       </SelectContent>
                     </Select>
                   </FormControl>
