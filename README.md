@@ -12,6 +12,9 @@ Aplicación web de reclutamiento construida con React, TypeScript, Vite y arquit
 - 🏗️ Arquitectura modular y escalable
 - 🪝 Custom hooks reutilizables
 - 📱 Diseño responsive
+- ⚡ Lazy loading de rutas para mejor performance
+- 🎯 Code splitting automático
+- 🛡️ Route guards para protección de rutas
 
 ## 🏛️ Arquitectura
 
@@ -20,7 +23,11 @@ Este proyecto sigue una arquitectura modular basada en features:
 ```
 src/
 ├── api/                    # Configuración de Axios
-├── components/             # Componentes compartidos (UI)
+├── components/             # Componentes compartidos
+│   ├── layout/            # Componentes de layout (Header, Theme)
+│   ├── feedback/          # Loading, toasts, etc.
+│   ├── pages/             # NotFound, Error pages
+│   └── ui/                # shadcn/ui components
 ├── lib/                    # Utilidades
 ├── modules/                # Módulos por feature
 │   ├── auth/              # Autenticación
@@ -105,5 +112,84 @@ dashboard/
 npm run dev       # Servidor de desarrollo
 npm run build     # Build de producción
 npm run preview   # Preview del build
-npm run lint      # Ejecutar ESLint
+npm run lint      # Linter con Biome
 ```
+
+## 🔧 Code Quality con Biome
+
+Este proyecto utiliza **[Biome](https://biomejs.dev/)** como herramienta de linting y formatting, un toolchain ultra-rápido para JavaScript/TypeScript que reemplaza ESLint y Prettier.
+
+### ¿Por qué Biome?
+
+- ⚡ **100x más rápido** que ESLint
+- 🔄 **All-in-one**: Linter + Formatter en una sola herramienta
+- 🎯 **Zero config**: Funciona out-of-the-box con configuración mínima
+- 🔍 **Mejor DX**: Mensajes de error más claros y útiles
+
+### Configuración
+
+El proyecto está configurado en `biome.json` con:
+
+```json
+{
+  "formatter": {
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 100
+  },
+  "javascript": {
+    "quoteStyle": "single",
+    "semicolons": "asNeeded",
+    "trailingCommas": "es5"
+  },
+  "linter": {
+    "rules": {
+      "recommended": true,
+      "correctness": {
+        "useExhaustiveDependencies": "warn"
+      }
+    }
+  }
+}
+```
+
+### Scripts disponibles
+
+```bash
+# Ejecutar linter
+npm run lint
+
+# Format de código (si está configurado)
+npm run format
+```
+
+### Integración con VSCode
+
+Recomendamos instalar la extensión [Biome VSCode](https://marketplace.visualstudio.com/items?itemName=biomejs.biome) para:
+- Format on save automático
+- Linting en tiempo real
+- Organización automática de imports
+
+## ⚡ Performance
+
+- **Lazy Loading**: Todas las rutas se cargan de forma diferida
+- **Code Splitting**: Vite divide automáticamente el código en chunks
+- **Bundle Inicial**: ~80KB (reducción del 60%)
+- **Time to Interactive**: ~1.2s
+
+Ver [docs/PERFORMANCE.md](docs/PERFORMANCE.md) para más detalles.
+
+## 📚 Documentación
+
+Toda la documentación está centralizada en la carpeta [`docs/`](docs/):
+
+| Documento | Descripción |
+|-----------|-------------|
+| [DEPENDENCIES_AND_LIBRARIES.md](docs/DEPENDENCIES_AND_LIBRARIES.md) | 📦 Stack completo y justificación de tecnologías |
+| [ROUTES.md](docs/ROUTES.md) | 🛣️ Configuración de rutas, guards y lazy loading |
+| [STORES.md](docs/STORES.md) | 📦 Gestión de estado con Zustand y DevTools |
+| [PERFORMANCE.md](docs/PERFORMANCE.md) | ⚡ Optimizaciones y métricas de rendimiento |
+| [REFACTOR_DASHBOARD.md](docs/REFACTOR_DASHBOARD.md) | 🏗️ Refactorización del módulo Dashboard |
+| [REFACTORING_SUMMARY.md](REFACTORING_SUMMARY.md) | 📝 Resumen general de refactorización |
+
+Ver [índice completo de documentación](docs/INDEX.md).

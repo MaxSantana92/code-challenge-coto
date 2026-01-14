@@ -17,13 +17,17 @@ dashboard/
 │   └── index.ts
 └── view/                       # Componentes de UI
     ├── components/             # Componentes específicos del dashboard
-    │   ├── DashboardHeader.tsx
     │   ├── CandidateFilters.tsx
     │   ├── CandidatesTable.tsx
     │   ├── CandidateRow.tsx
     │   ├── CandidatesPagination.tsx
+    │   ├── CandidateDetailModal.tsx
     │   └── index.ts
     └── Dashboard.tsx           # Componente principal (orquestador)
+
+# Header movido a componentes globales
+src/components/layout/
+└── Header.tsx                  # Header
 ```
 
 ## 🎯 Componente Principal: Dashboard
@@ -81,8 +85,9 @@ Hook genérico reutilizable para paginación.
 
 ## 🧩 Componentes
 
-### `DashboardHeader`
-Header con logo, título y botones de tema/logout.
+### `Header` (layout)
+**Ubicación:** `src/components/layout/Header.tsx`  
+Header compartido con logo, título y botones de tema/logout.  
 
 ### `CandidateFilters`
 Filtros de búsqueda (tecnología, nivel, búsqueda por texto).

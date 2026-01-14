@@ -8,8 +8,7 @@ Este directorio contiene toda la configuración de rutas y guards de la aplicaci
 routes/
 ├── paths.ts       # Constantes de rutas centralizadas
 ├── guards.tsx     # Componentes de protección de rutas
-├── index.ts       # Barrel export
-└── README.md      # Este archivo
+└── index.ts       # Barrel export
 ```
 
 ## 🗺️ Rutas Disponibles
@@ -65,6 +64,73 @@ Protege rutas públicas que NO deben ser accesibles si ya estás autenticado.
   <Route path={PATHS.LOGIN} element={<LoginPage />} />
 </Route>
 ```
+
+## ⚡ Lazy Loading
+
+Las rutas utilizan **lazy loading** para mejorar el rendimiento inicial de la aplicación.
+
+### ¿Qué es Lazy Loading?
+
+Lazy loading (carga diferida) divide el código en chunks más pequeños que se cargan solo cuando se necesitan, en lugar de cargar todo el código de la aplicación al inicio.
+
+### Implementación en App.tsx:
+
+```tsx
+import { lazy, Suspense } from 'react'
+import { LoadingScreen } from './components/LoadingScreen'
+
+// Componentes cargados de forma diferida
+const LoginPage = lazy(() => import('./modules/auth/view/login'))
+const Dashboard = lazy(() => import('./modules/dashboard/view/Dashboard'))
+const NotFound = lazy(() => 
+  import('./components/NotFound').then(m => ({ default: m.NotFound }))
+)
+
+function App() {
+  return (
+    <Suspense fallback={<LoadingScreen />}>
+      <Routes>
+        {/* Rutas */}
+      </Routes>
+    </Suspense>
+  )
+}
+```
+
+### Beneficios:
+
+1. **Carga inicial más rápida** ⚡
+   - Solo se descarga el código de la ruta actual
+   - Reduce el bundle inicial de JavaScript
+
+2. **Mejor experiencia de usuario** 👥
+   - La app se carga más rápido
+   - Muestra un loading screen mientras carga la ruta
+
+3. **Optimización automática** 🎯
+   - Vite divide automáticamente el código
+   - Cada ruta se convierte en un chunk separado
+
+4. **Code splitting** 📦
+   - `login.[hash].js` - Código del login
+   - `dashboard.[hash].js` - Código del dashboard
+   - `notfound.[hash].js` - Código del 404
+
+### Componente de Loading:
+
+```tsx
+// LoadingScreen.tsx
+export function LoadingScreen() {
+  return (
+    <div className="flex items-center justify-center min-h-screen">
+      <Loader2 className="animate-spin" />
+      <p>Cargando...</p>
+    </div>
+  )
+}
+```
+
+---
 
 ## 📝 Uso
 

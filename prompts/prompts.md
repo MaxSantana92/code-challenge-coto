@@ -178,7 +178,7 @@ Se identificaron múltiples áreas de mejora:
 >
 > b) Separar Componentes del Dashboard - Dividirlo en:
 >
-> - DashboardHeader.tsx
+> - Header.tsx
 > - CandidateFilters.tsx
 > - CandidatesTable.tsx
 > - CandidateRow.tsx
@@ -195,7 +195,7 @@ Se identificaron múltiples áreas de mejora:
 
 **Componentes Creados (552 líneas totales):**
 
-- `DashboardHeader.tsx` (31 líneas): Header con logo, título y controles (tema/logout)
+- `Header.tsx` (31 líneas): Header con logo, título y controles (tema/logout)
 - `CandidateFilters.tsx` (89 líneas): Formulario de filtros con selects e input de búsqueda
 - `CandidatesTable.tsx` (110 líneas): Tabla con headers ordenables y manejo de estados
 - `CandidateRow.tsx` (95 líneas): Fila individual con avatar, badges, score y acciones
@@ -221,7 +221,7 @@ dashboard/
 │   └── index.ts
 ├── view/
 │   ├── components/           # UI modular
-│   │   ├── DashboardHeader.tsx
+│   │   ├── Header.tsx
 │   │   ├── CandidateFilters.tsx
 │   │   ├── CandidatesTable.tsx
 │   │   ├── CandidateRow.tsx

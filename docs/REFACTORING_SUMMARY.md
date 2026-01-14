@@ -24,14 +24,18 @@ dashboard/
 │   └── index.ts                    # 4 líneas
 ├── view/
 │   ├── components/                  # 🧩 UI modular
-│   │   ├── DashboardHeader.tsx     # 31 líneas
 │   │   ├── CandidateFilters.tsx    # 89 líneas
 │   │   ├── CandidatesTable.tsx     # 110 líneas
 │   │   ├── CandidateRow.tsx        # 95 líneas
-│   │   ├── CandidatesPagination.tsx # 135 líneas
-│   │   └── index.ts                # 5 líneas
-│   └── Dashboard.tsx               # 96 líneas (orquestador)
+│   │   ├── CandidatesPagination.tsx # 77 líneas
+│   │   ├── CandidateDetailModal.tsx # Modal de detalles
+│   │   └── index.ts                # Exports
+│   └── Dashboard.tsx               # 92 líneas (orquestador)
 └── README.md                        # Documentación
+
+# Componentes movidos a layout global:
+src/components/layout/
+└── Header.tsx                       # 31 líneas
 ```
 
 ## 📈 Métricas de Mejora
@@ -120,11 +124,12 @@ test('CandidateRow renders candidate info', () => {
 3. **usePagination**: Paginación genérica reutilizable
 
 ### Componentes (UI)
-1. **DashboardHeader**: Header con logo y controles
+1. **Header** (`src/components/layout/`): Header global con logo y controles
 2. **CandidateFilters**: Formulario de filtros
 3. **CandidatesTable**: Tabla con headers ordenables
 4. **CandidateRow**: Fila de candidato individual
 5. **CandidatesPagination**: Controles de paginación
+6. **CandidateDetailModal**: Modal con detalles del candidato
 
 ## 🚀 Próximos Pasos Recomendados
 
