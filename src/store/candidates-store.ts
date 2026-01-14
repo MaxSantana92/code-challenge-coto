@@ -2,6 +2,7 @@ import { create } from 'zustand'
 
 import { getCandidates } from '@/modules/dashboard/service'
 import type { Candidate } from '@/modules/dashboard/model'
+import { ensureArray } from '@/lib/utils'
 
 type CandidatesState = {
   candidates: Candidate[]
@@ -25,7 +26,7 @@ export const useCandidatesStore = create<CandidatesState>()((set, get) => ({
     set({ loading: true, error: null, requested: true })
     try {
       const data = await getCandidates()
-      const safeCandidates = Array.isArray(data) ? data : []
+      const safeCandidates = ensureArray<Candidate>(data)
       set({ candidates: safeCandidates, loading: false, loaded: true, requested: false })
     } catch (error) {
       set({

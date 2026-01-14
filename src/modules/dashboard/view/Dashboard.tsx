@@ -29,9 +29,10 @@ import {
 } from '@/components/ui/table'
 import ContactModal from '@/components/ContactModal'
 import CandidateDetailModal from '@/components/CandidateDetailModal'
-import { useAuthStore } from '@/store/auth-store'
 import { useCandidatesStore } from '@/store/candidates-store'
 import { ThemeToggle } from '@/components/ThemeToggle'
+import { ensureArray, formatDate, uniqueValues } from '@/lib/utils'
+import { useAuthStore } from '@/store/auth-store'
 
 function Dashboard() {
   const [technology, setTechnology] = React.useState<string | undefined>()
@@ -55,23 +56,18 @@ function Dashboard() {
   }, [candidates])
 
   const safeCandidates = React.useMemo(
-    () => (Array.isArray(candidates) ? candidates : []),
+    () => ensureArray<(typeof candidates)[number]>(candidates),
     [candidates]
   )
 
   const technologyOptions = React.useMemo(
     () =>
-      Array.from(
-        new Set(safeCandidates.flatMap((candidate) => candidate.skills.map((s) => s.language)))
-      ),
+      uniqueValues(safeCandidates.flatMap((candidate) => candidate.skills.map((s) => s.language))),
     [safeCandidates]
   )
 
   const levelOptions = React.useMemo(
-    () =>
-      Array.from(
-        new Set(safeCandidates.flatMap((candidate) => candidate.skills.map((s) => s.level)))
-      ),
+    () => uniqueValues(safeCandidates.flatMap((candidate) => candidate.skills.map((s) => s.level))),
     [safeCandidates]
   )
 
@@ -125,13 +121,6 @@ function Dashboard() {
     return sortedCandidates.slice(start, start + pageSize)
   }, [sortedCandidates, page, pageSize])
 
-  const formatDate = (value: string) =>
-    new Intl.DateTimeFormat('es-AR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-    }).format(new Date(value))
-
   const pages = React.useMemo(
     () => Array.from({ length: totalPages }, (_, index) => index + 1),
     [totalPages]
@@ -165,7 +154,9 @@ function Dashboard() {
           <CardHeader className='rounded-2xl rounded-b-none border-b border-border bg-accent/50'>
             <div className='flex flex-col gap-1'>
               <CardTitle className='text-lg font-semibold'>Filtros</CardTitle>
-              <p className='text-sm text-muted-foreground'>Refina la busqueda por lenguaje y nivel.</p>
+              <p className='text-sm text-muted-foreground'>
+                Refina la busqueda por lenguaje y nivel.
+              </p>
             </div>
             <div className='mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3'>
               <div className='flex flex-col gap-2'>

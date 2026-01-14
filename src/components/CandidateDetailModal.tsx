@@ -4,6 +4,7 @@ import { CalendarDays, Layers, UserRound, Award } from 'lucide-react'
 import ModalShell from '@/components/ModalShell'
 import { Badge } from '@/components/ui/badge'
 import type { Candidate } from '@/modules/dashboard/model'
+import { formatDate } from '@/lib/utils'
 
 type CandidateDetailModalProps = {
   candidate: Candidate
@@ -12,12 +13,6 @@ type CandidateDetailModalProps = {
 
 function CandidateDetailModal({ candidate, trigger }: CandidateDetailModalProps) {
   const firstSkill = candidate.skills[0]
-  const formatDate = (value: string) =>
-    new Intl.DateTimeFormat('es-AR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-    }).format(new Date(value))
 
   return (
     <ModalShell
