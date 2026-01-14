@@ -145,3 +145,117 @@ Este documento registra el uso de herramientas de IA (ChatGPT/Gemini/Claude) dur
 - Se mantuvo la compatibilidad con los modales existentes y el diseño mobile.
 
 ---
+
+## 8. Revisión de Arquitectura y Refactorización del Dashboard
+
+**Objetivo:** Revisar la arquitectura del proyecto, identificar mejoras y refactorizar el Dashboard extrayendo lógica a custom hooks y separando en componentes especializados.
+
+**Herramienta:** Cursor
+
+### Prompt (Fase 1 - Análisis):
+
+> "Puedes revisar la arquitectura del proyecto y dime que mejoras realizarías"
+
+**Respuesta y Recomendaciones:**
+
+Se identificaron múltiples áreas de mejora:
+
+- Extracción de lógica a custom hooks
+- Separación del componente Dashboard (507 líneas) en componentes especializados
+- Mejora de reutilización de código
+- Mejor testabilidad y mantenibilidad
+- Documentación de la arquitectura
+
+### Prompt (Fase 2 - Implementación):
+
+> "Hagamos esto:
+>
+> a) Hooks Personalizados - Extraer la lógica del Dashboard a custom hooks:
+>
+> - useCandidateFilters
+> - useCandidateSorting
+> - usePagination
+>
+> b) Separar Componentes del Dashboard - Dividirlo en:
+>
+> - DashboardHeader.tsx
+> - CandidateFilters.tsx
+> - CandidatesTable.tsx
+> - CandidateRow.tsx
+> - CandidatesPagination.tsx"
+
+**Aplicación y Ajustes:**
+
+**Hooks Creados (188 líneas totales):**
+
+- `useCandidateFilters.ts` (65 líneas): Maneja filtrado por tecnología, nivel y búsqueda de texto
+- `useCandidateSorting.ts` (60 líneas): Maneja ordenamiento por campo y dirección
+- `usePagination.ts` (59 líneas): Hook genérico reutilizable para paginación
+- `hooks/index.ts`: Barrel export para importación limpia
+
+**Componentes Creados (552 líneas totales):**
+
+- `DashboardHeader.tsx` (31 líneas): Header con logo, título y controles (tema/logout)
+- `CandidateFilters.tsx` (89 líneas): Formulario de filtros con selects e input de búsqueda
+- `CandidatesTable.tsx` (110 líneas): Tabla con headers ordenables y manejo de estados
+- `CandidateRow.tsx` (95 líneas): Fila individual con avatar, badges, score y acciones
+- `CandidatesPagination.tsx` (135 líneas): Controles de paginación responsive
+- `components/index.ts`: Barrel export
+
+**Dashboard Refactorizado:**
+
+- Reducido de **507 líneas** a **96 líneas** (-81%)
+- Ahora actúa como orquestador limpio que:
+  - Obtiene datos del store
+  - Usa hooks personalizados para lógica
+  - Compone componentes especializados para UI
+
+**Estructura Final:**
+
+```
+dashboard/
+├── hooks/                    # Lógica reutilizable
+│   ├── useCandidateFilters.ts
+│   ├── useCandidateSorting.ts
+│   ├── usePagination.ts
+│   └── index.ts
+├── view/
+│   ├── components/           # UI modular
+│   │   ├── DashboardHeader.tsx
+│   │   ├── CandidateFilters.tsx
+│   │   ├── CandidatesTable.tsx
+│   │   ├── CandidateRow.tsx
+│   │   ├── CandidatesPagination.tsx
+│   │   └── index.ts
+│   └── Dashboard.tsx         # Orquestador (96 líneas)
+└── README.md                 # Documentación del módulo
+```
+
+**Beneficios Logrados:**
+
+- ✅ **Separación de responsabilidades**: Lógica en hooks, presentación en componentes
+- ✅ **Reutilización**: Hooks y componentes son independientes y reutilizables
+- ✅ **Mantenibilidad**: Cada archivo tiene una responsabilidad clara
+- ✅ **Testabilidad**: Fácil testear cada parte por separado
+- ✅ **Legibilidad**: Código autodocumentado y fácil de entender
+- ✅ **Escalabilidad**: Fácil agregar features sin afectar código existente
+
+**Documentación Adicional Creada:**
+
+- `src/modules/dashboard/README.md`: Documentación detallada del módulo
+- `REFACTORING_SUMMARY.md`: Resumen completo de la refactorización con métricas
+
+**Flujo de Datos Simplificado:**
+
+```
+Store (candidates)
+  ↓ useCandidateFilters
+Candidatos filtrados
+  ↓ useCandidateSorting
+Candidatos ordenados
+  ↓ usePagination
+Candidatos paginados
+  ↓ UI Components
+```
+
+---

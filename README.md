@@ -1,73 +1,106 @@
-# React + TypeScript + Vite
+# 🚀 Recruiter Dashboard - Code Challenge
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación web de reclutamiento construida con React, TypeScript, Vite y arquitectura modular.
 
-Currently, two official plugins are available:
+## ✨ Características
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🎨 UI moderna con Tailwind CSS y shadcn/ui
+- 🌓 Modo oscuro/claro
+- 🔍 Filtrado avanzado por tecnología, nivel y búsqueda
+- 📊 Ordenamiento por múltiples campos
+- 📄 Paginación responsive
+- 🏗️ Arquitectura modular y escalable
+- 🪝 Custom hooks reutilizables
+- 📱 Diseño responsive
 
-## React Compiler
+## 🏛️ Arquitectura
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Este proyecto sigue una arquitectura modular basada en features:
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── api/                    # Configuración de Axios
+├── components/             # Componentes compartidos (UI)
+├── lib/                    # Utilidades
+├── modules/                # Módulos por feature
+│   ├── auth/              # Autenticación
+│   │   ├── model/         # Tipos
+│   │   ├── service/       # API calls
+│   │   └── view/          # Componentes
+│   ├── dashboard/         # Dashboard principal
+│   │   ├── hooks/         # Custom hooks
+│   │   ├── model/         # Tipos
+│   │   ├── service/       # API calls
+│   │   └── view/          # Componentes
+│   │       └── components/ # Componentes específicos
+│   └── messages/          # Mensajería
+├── routes/                # Guards y configuración de rutas
+└── store/                 # Estado global (Zustand)
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🚀 Inicio Rápido
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+# Instalar dependencias
+npm install
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Iniciar servidor de desarrollo
+npm run dev
+
+# Construir para producción
+npm run build
+
+# Preview de producción
+npm run preview
+```
+
+## 🔑 Credenciales de Demo
+
+- **Email**: `recruiter@demo.com`
+- **Password**: `123456`
+
+## 🛠️ Stack Tecnológico
+
+- **Framework**: React 18 + TypeScript
+- **Build Tool**: Vite
+- **Routing**: React Router v6
+- **State Management**: Zustand
+- **Styling**: Tailwind CSS
+- **UI Components**: shadcn/ui + Radix UI
+- **Forms**: React Hook Form + Zod
+- **HTTP Client**: Axios
+- **Icons**: Lucide React
+
+## 📦 Estructura de Módulos
+
+Cada módulo sigue el patrón **Model-Service-View**:
+
+- **Model**: Tipos TypeScript y definiciones de datos
+- **Service**: Lógica de negocio y llamadas a API
+- **View**: Componentes de React y UI
+
+### Ejemplo: Dashboard Module
+
+```
+dashboard/
+├── hooks/                  # Lógica reutilizable
+│   ├── useCandidateFilters.ts
+│   ├── useCandidateSorting.ts
+│   └── usePagination.ts
+├── model/                  # Tipos
+│   └── index.ts
+├── service/                # API calls
+│   └── index.ts
+└── view/                   # UI
+    ├── components/         # Componentes específicos
+    └── Dashboard.tsx       # Componente principal
+```
+
+## 📝 Scripts Disponibles
+
+```bash
+npm run dev       # Servidor de desarrollo
+npm run build     # Build de producción
+npm run preview   # Preview del build
+npm run lint      # Ejecutar ESLint
 ```
