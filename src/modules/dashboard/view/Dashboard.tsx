@@ -1,6 +1,7 @@
-﻿import React from 'react'
-import { ChevronLeft, ChevronRight, Eye, LogOut, Mail } from 'lucide-react'
-
+﻿import { ChevronLeft, ChevronRight, Eye, LogOut, Mail } from 'lucide-react'
+import React from 'react'
+import CandidateDetailModal from '@/components/CandidateDetailModal'
+import { ThemeToggle } from '@/components/ThemeToggle'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -27,12 +28,10 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import ContactModal from '@/components/ContactModal'
-import CandidateDetailModal from '@/components/CandidateDetailModal'
-import { useCandidatesStore } from '@/store/candidates-store'
-import { ThemeToggle } from '@/components/ThemeToggle'
 import { ensureArray, formatDate, uniqueValues } from '@/lib/utils'
+import ContactModal from '@/modules/messages/view/ContactModal'
 import { useAuthStore } from '@/store/auth-store'
+import { useCandidatesStore } from '@/store/candidates-store'
 
 function Dashboard() {
   const [technology, setTechnology] = React.useState<string | undefined>()
@@ -53,7 +52,7 @@ function Dashboard() {
 
   React.useEffect(() => {
     if (candidates.length === 0) fetchCandidates()
-  }, [candidates])
+  }, [candidates, fetchCandidates])
 
   const safeCandidates = React.useMemo(
     () => ensureArray<(typeof candidates)[number]>(candidates),
@@ -105,11 +104,11 @@ function Dashboard() {
     })
 
     return sorted
-  }, [filteredCandidates, sort, safeCandidates])
+  }, [filteredCandidates, sort])
 
   React.useEffect(() => {
     setPage(1)
-  }, [technology, level, search, sort])
+  }, [])
 
   const totalPages = Math.max(1, Math.ceil(sortedCandidates.length / pageSize))
   React.useEffect(() => {
@@ -119,7 +118,7 @@ function Dashboard() {
   const paginatedCandidates = React.useMemo(() => {
     const start = (page - 1) * pageSize
     return sortedCandidates.slice(start, start + pageSize)
-  }, [sortedCandidates, page, pageSize])
+  }, [sortedCandidates, page])
 
   const pages = React.useMemo(
     () => Array.from({ length: totalPages }, (_, index) => index + 1),
@@ -216,6 +215,7 @@ function Dashboard() {
                   <TableRow>
                     <TableHead className='pl-6'>
                       <button
+                        type='button'
                         className='flex items-center gap-1 text-left font-semibold text-foreground hover:text-primary'
                         onClick={() =>
                           setSort((prev) =>
@@ -234,6 +234,7 @@ function Dashboard() {
                     </TableHead>
                     <TableHead>
                       <button
+                        type='button'
                         className='flex items-center gap-1 text-left font-semibold text-foreground hover:text-primary'
                         onClick={() =>
                           setSort((prev) =>
@@ -252,6 +253,7 @@ function Dashboard() {
                     </TableHead>
                     <TableHead>
                       <button
+                        type='button'
                         className='flex items-center gap-1 text-left font-semibold text-foreground hover:text-primary'
                         onClick={() =>
                           setSort((prev) =>
@@ -270,6 +272,7 @@ function Dashboard() {
                     </TableHead>
                     <TableHead>
                       <button
+                        type='button'
                         className='flex items-center gap-1 text-left font-semibold text-foreground hover:text-primary'
                         onClick={() =>
                           setSort((prev) =>

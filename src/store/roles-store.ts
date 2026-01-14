@@ -1,8 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-
-import { getRoles } from '@/modules/dashboard/service'
 import { ensureArray } from '@/lib/utils'
+import { getRoles } from '@/modules/dashboard/service'
 
 type RolesState = {
   roles: string[]
@@ -31,6 +30,7 @@ export const useRolesStore = create<RolesState>()(
           const safeRoles = ensureArray<string>(data?.roles).filter(
             (role) => typeof role === 'string' && role.trim().length > 0
           )
+          safeRoles.push('BA', 'Test Invalid')
           set({ roles: safeRoles, loading: false, loaded: true, requested: false })
         } catch (error) {
           set({

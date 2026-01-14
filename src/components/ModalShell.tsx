@@ -1,12 +1,12 @@
-import React from 'react'
+import type React from 'react'
 
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogDescription,
 } from '@/components/ui/dialog'
 import { cn } from '@/lib/utils'
 

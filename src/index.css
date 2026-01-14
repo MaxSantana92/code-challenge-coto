@@ -78,3 +78,106 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer base {
+  :root {
+    --success-bg: hsl(143, 85%, 96%);
+    --success-border: hsl(145, 92%, 91%);
+    --success-text: hsl(140, 100%, 27%);
+
+    --error-bg: hsl(0, 93%, 94%);
+    --error-border: hsl(0, 93%, 94%);
+    --error-text: hsl(0, 84%, 60%);
+
+    --info-bg: hsl(208, 100%, 97%);
+    --info-border: hsl(221, 91%, 91%);
+    --info-text: hsl(221, 83%, 53%);
+
+    --warning-bg: hsl(49, 100%, 97%);
+    --warning-border: hsl(49, 91%, 91%);
+    --warning-text: hsl(31, 92%, 45%);
+  }
+
+  .dark {
+    --success-bg: hsl(150, 100%, 6%);
+    --success-border: hsl(147, 100%, 12%);
+    --success-text: hsl(150, 86%, 65%);
+
+    --error-bg: hsl(358, 76%, 10%);
+    --error-border: hsl(357, 89%, 16%);
+    --error-text: hsl(358, 100%, 81%);
+
+    --info-bg: hsl(215, 100%, 6%);
+    --info-border: hsl(223, 100%, 12%);
+    --info-text: hsl(216, 87%, 65%);
+
+    --warning-bg: hsl(64, 100%, 6%);
+    --warning-border: hsl(60, 100%, 12%);
+    --warning-text: hsl(46, 87%, 65%);
+  }
+}
+
+[data-sonner-toaster] {
+  font-family: inherit !important;
+}
+
+[data-sonner-toast] {
+  background: var(--normal-bg) !important;
+  border: 1px solid var(--normal-border) !important;
+  color: var(--normal-text) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+[data-sonner-toast][data-type="success"] {
+  background: var(--success-bg) !important;
+  border-color: var(--success-border) !important;
+  color: var(--success-text) !important;
+}
+
+[data-sonner-toast][data-type="error"] {
+  background: var(--error-bg) !important;
+  border-color: var(--error-border) !important;
+  color: var(--error-text) !important;
+}
+
+[data-sonner-toast][data-type="warning"] {
+  background: var(--warning-bg) !important;
+  border-color: var(--warning-border) !important;
+  color: var(--warning-text) !important;
+}
+
+[data-sonner-toast][data-type="info"] {
+  background: var(--info-bg) !important;
+  border-color: var(--info-border) !important;
+  color: var(--info-text) !important;
+}
+
+[data-sonner-toast] [data-icon] {
+  color: inherit !important;
+}
+
+[data-sonner-toast] [data-title] {
+  color: inherit !important;
+  font-weight: 500;
+}
+
+[data-sonner-toast] [data-description] {
+  color: inherit !important;
+  opacity: 0.9;
+}
+
+[data-sonner-toast] [data-button] {
+  background: rgba(0, 0, 0, 0.05) !important;
+  color: inherit !important;
+  border-radius: 0.375rem;
+}
+
+[data-sonner-toast] [data-button]:hover {
+  background: rgba(0, 0, 0, 0.1) !important;
+}
+
+[data-sonner-toast][data-type="loading"] {
+  background: var(--normal-bg) !important;
+  border-color: var(--normal-border) !important;
+  color: var(--normal-text) !important;
+}

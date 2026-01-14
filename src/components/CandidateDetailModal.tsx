@@ -1,10 +1,10 @@
-import React from 'react'
-import { CalendarDays, Layers, UserRound, Award } from 'lucide-react'
+import { Award, CalendarDays, Layers, UserRound } from 'lucide-react'
+import type React from 'react'
 
 import ModalShell from '@/components/ModalShell'
 import { Badge } from '@/components/ui/badge'
-import type { Candidate } from '@/modules/dashboard/model'
 import { formatDate } from '@/lib/utils'
+import type { Candidate } from '@/modules/dashboard/model'
 
 type CandidateDetailModalProps = {
   candidate: Candidate
