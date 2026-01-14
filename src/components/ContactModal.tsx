@@ -1,5 +1,5 @@
 import React from 'react'
-import { Check, Mail } from 'lucide-react'
+import { Mail } from 'lucide-react'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
