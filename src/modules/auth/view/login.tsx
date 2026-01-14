@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Check, Loader2 } from 'lucide-react'
 
 import { useAuthStore } from '@/store/auth-store'
+import { useRolesStore } from '@/store/roles-store'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import { login as loginService } from '@/modules/auth/service'
 
@@ -11,6 +12,7 @@ const LoginPage = () => {
   const [errors, setErrors] = useState<{ email?: string; password?: string; general?: string }>({})
   const [isLoading, setIsLoading] = useState(false)
   const setSession = useAuthStore((s) => s.setSession)
+  const fetchRoles = useRolesStore((s) => s.fetchRoles)
   const navigate = useNavigate()
 
   const handleChange =
@@ -39,6 +41,7 @@ const LoginPage = () => {
     try {
       const result = await loginService(form.email.trim(), form.password.trim())
       setSession(result.user, result.token)
+      await fetchRoles()
       navigate('/', { replace: true })
     } catch (err) {
       setErrors({

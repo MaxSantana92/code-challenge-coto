@@ -23,6 +23,7 @@ import {
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { useRolesStore } from '@/store/roles-store'
 
 const contactSchema = z.object({
   message: z.string().min(10, 'El mensaje debe tener al menos 10 caracteres'),
@@ -38,11 +39,13 @@ type ContactModalProps = {
   onOpenChange?: (open: boolean) => void
 }
 
-const roles = ['Frontend Developer', 'Backend Developer', 'QA Automation']
-
 function ContactModal({ trigger, isOpen, onClose, onOpenChange }: ContactModalProps) {
   const [internalOpen, setInternalOpen] = React.useState(false)
   const open = isOpen ?? internalOpen
+  const roles = useRolesStore((s) => s.roles)
+  const loadingRoles = useRolesStore((s) => s.loading)
+  const rolesError = useRolesStore((s) => s.error)
+  const hasRoles = roles.length > 0
 
   const setOpen = React.useCallback(
     (next: boolean) => {
@@ -114,16 +117,45 @@ function ContactModal({ trigger, isOpen, onClose, onOpenChange }: ContactModalPr
                 <FormItem>
                   <FormLabel>Rol a proponer</FormLabel>
                   <FormControl>
-                    <Select onValueChange={field.onChange} value={field.value}>
+                    <Select
+                      onValueChange={field.onChange}
+                      value={field.value}
+                      disabled={loadingRoles || !hasRoles}
+                    >
                       <SelectTrigger className='w-full bg-background'>
-                        <SelectValue placeholder='Seleccioná un rol' />
+                        <SelectValue
+                          placeholder={
+                            loadingRoles
+                              ? 'Cargando roles...'
+                              : hasRoles
+                                ? 'Seleccioná un rol'
+                                : 'No hay roles disponibles'
+                          }
+                        />
                       </SelectTrigger>
                       <SelectContent>
-                        {roles.map((role) => (
-                          <SelectItem key={role} value={role}>
-                            {role}
+                        {loadingRoles && (
+                          <SelectItem disabled value='__loading'>
+                            Cargando roles...
                           </SelectItem>
-                        ))}
+                        )}
+                        {rolesError && !loadingRoles && (
+                          <SelectItem disabled value='__error'>
+                            Error al cargar roles
+                          </SelectItem>
+                        )}
+                        {!loadingRoles && !rolesError && hasRoles && (
+                          roles.map((role) => (
+                            <SelectItem key={role} value={role}>
+                              {role}
+                            </SelectItem>
+                          ))
+                        )}
+                        {!loadingRoles && !rolesError && !hasRoles && (
+                          <SelectItem disabled value='__empty'>
+                            No hay roles disponibles
+                          </SelectItem>
+                        )}
                       </SelectContent>
                     </Select>
                   </FormControl>
