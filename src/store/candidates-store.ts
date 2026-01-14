@@ -1,8 +1,7 @@
 import { create } from 'zustand'
-
-import { getCandidates } from '@/modules/dashboard/service'
-import type { Candidate } from '@/modules/dashboard/model'
 import { ensureArray } from '@/lib/utils'
+import type { Candidate } from '@/modules/dashboard/model'
+import { getCandidates } from '@/modules/dashboard/service'
 
 type CandidatesState = {
   candidates: Candidate[]

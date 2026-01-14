@@ -1,6 +1,7 @@
-import { Routes, Route, HashRouter } from 'react-router-dom'
+import { HashRouter, Route, Routes } from 'react-router-dom'
 
 import './App.css'
+import { Toaster } from '@/components/ui/sonner'
 import LoginPage from './modules/auth/view/login'
 import Dashboard from './modules/dashboard/view/Dashboard'
 import { PrivateRoute, PublicRoute } from './route-guards'
@@ -18,6 +19,7 @@ function App() {
           <Route path='/' element={<Dashboard />} />
         </Route>
       </Routes>
+      <Toaster />
     </HashRouter>
   )
 }

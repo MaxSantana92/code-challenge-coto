@@ -1,11 +1,10 @@
+import { Check, Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Check, Loader2 } from 'lucide-react'
-
-import { useAuthStore } from '@/store/auth-store'
-import { useRolesStore } from '@/store/roles-store'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import { login as loginService } from '@/modules/auth/service'
+import { useAuthStore } from '@/store/auth-store'
+import { useRolesStore } from '@/store/roles-store'
 
 const LoginPage = () => {
   const [form, setForm] = useState({ email: '', password: '' })
@@ -43,7 +42,7 @@ const LoginPage = () => {
       setSession(result.user, result.token)
       await fetchRoles()
       navigate('/', { replace: true })
-    } catch (err) {
+    } catch (_error) {
       setErrors({
         general: 'Los datos ingresados no coinciden. Por favor, verificá que sean correctos.',
       })

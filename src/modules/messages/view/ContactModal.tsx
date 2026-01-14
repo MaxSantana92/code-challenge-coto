@@ -1,10 +1,11 @@
-import React from 'react'
-import { Mail } from 'lucide-react'
-import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Mail } from 'lucide-react'
+import React from 'react'
 import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 
 import ModalShell from '@/components/ModalShell'
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -13,6 +14,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
 import {
   Select,
   SelectContent,
@@ -21,11 +23,14 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
-import { Button } from '@/components/ui/button'
+import { showSuccessToast } from '@/lib/toast-utils'
 import { cn } from '@/lib/utils'
+import { sendMessage } from '@/modules/messages/service'
+import { useMessagesStore } from '@/store/messages-store'
 import { useRolesStore } from '@/store/roles-store'
 
 const contactSchema = z.object({
+  email: z.string().email('Ingresá un email válido'),
   message: z.string().min(10, 'El mensaje debe tener al menos 10 caracteres'),
   role: z.string().min(1, 'Seleccioná un rol'),
 })
@@ -41,11 +46,13 @@ type ContactModalProps = {
 
 function ContactModal({ trigger, isOpen, onClose, onOpenChange }: ContactModalProps) {
   const [internalOpen, setInternalOpen] = React.useState(false)
+  const [loading, setLoading] = React.useState(false)
   const open = isOpen ?? internalOpen
   const roles = useRolesStore((s) => s.roles)
   const loadingRoles = useRolesStore((s) => s.loading)
   const rolesError = useRolesStore((s) => s.error)
   const hasRoles = roles.length > 0
+  const addMessage = useMessagesStore((s) => s.addMessage)
 
   const setOpen = React.useCallback(
     (next: boolean) => {
@@ -63,16 +70,26 @@ function ContactModal({ trigger, isOpen, onClose, onOpenChange }: ContactModalPr
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
+      email: '',
       message: '',
       role: '',
     },
     mode: 'onSubmit',
   })
 
-  const onSubmit = (values: ContactFormValues) => {
-    console.log('Contact form submitted', values)
-    setOpen(false)
-    form.reset()
+  const onSubmit = async (values: ContactFormValues) => {
+    setLoading(true)
+    try {
+      const response = await sendMessage({ role: values.role, msj: values.message })
+      showSuccessToast('Mensaje enviado correctamente')
+      addMessage({ ...response, email: values.email })
+      form.reset()
+      setOpen(false)
+    } catch (_error) {
+      // El interceptor ya mostró el error, solo mantener el formulario
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -94,6 +111,26 @@ function ContactModal({ trigger, isOpen, onClose, onOpenChange }: ContactModalPr
           <form className='space-y-4' onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               control={form.control}
+              name='email'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      type='email'
+                      placeholder='tu@email.com'
+                      className='bg-background text-foreground'
+                      disabled={loading}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
               name='message'
               render={({ field }) => (
                 <FormItem>
@@ -102,6 +139,7 @@ function ContactModal({ trigger, isOpen, onClose, onOpenChange }: ContactModalPr
                     <Textarea
                       placeholder='Ingresá tu mensaje...'
                       className='bg-background text-foreground'
+                      disabled={loading}
                       {...field}
                     />
                   </FormControl>
@@ -120,7 +158,7 @@ function ContactModal({ trigger, isOpen, onClose, onOpenChange }: ContactModalPr
                     <Select
                       onValueChange={field.onChange}
                       value={field.value}
-                      disabled={loadingRoles || !hasRoles}
+                      disabled={loadingRoles || !hasRoles || loading}
                     >
                       <SelectTrigger className='w-full bg-background'>
                         <SelectValue
@@ -128,8 +166,8 @@ function ContactModal({ trigger, isOpen, onClose, onOpenChange }: ContactModalPr
                             loadingRoles
                               ? 'Cargando roles...'
                               : hasRoles
-                              ? 'Seleccioná un rol'
-                              : 'No hay roles disponibles'
+                                ? 'Seleccioná un rol'
+                                : 'No hay roles disponibles'
                           }
                         />
                       </SelectTrigger>
@@ -167,9 +205,10 @@ function ContactModal({ trigger, isOpen, onClose, onOpenChange }: ContactModalPr
 
             <Button
               type='submit'
+              disabled={loading}
               className={cn('w-full bg-primary text-primary-foreground hover:bg-orange-600')}
             >
-              Enviar formulario
+              {loading ? 'Enviando...' : 'Enviar formulario'}
             </Button>
           </form>
         </Form>
