@@ -89,3 +89,59 @@ Este documento registra el uso de herramientas de IA (ChatGPT/Gemini/Claude) dur
 
 - Plan fuente: `@c:\Users\Max Santana\.cursor\plans\plan_unificar_modales_con_un_modalshell_reutilizable_87fc4bda.plan.md`.
 - Tareas completadas: crear `ModalShell`, refactor de `ContactModal`, refactor de `CandidateDetailModal` y verificación de triggers en Dashboard.
+
+## 5. Integración de `/userlist` tipado, store y tabla paginada/sortable
+
+**Objetivo:** Tipar el endpoint `/userlist`, guardar los datos en Zustand y renderizar la tabla con filtros, paginación y ordenamiento.
+
+**Herramienta:** Cursor (ChatGPT)
+
+### Prompt:
+
+> "esta es la estructura del response del endpoint /userlist, puedes generar el tipado, puedes tiparlo en el archivo @index.ts, además necesito que dicha información se guarde en @src/store/candidates-store.ts y que se muestre de forma pagina en @src/modules/dashboard/view/Dashboard.tsx"
+
+**Aplicación y Ajustes:**
+
+- Se tipó `Candidate` y `GetCandidatesResponse` en `src/modules/dashboard/model/index.ts`.
+- Se creó `useCandidatesStore` con fetch y manejo de loading/error.
+- Se reescribió `Dashboard` para consumir el store, filtrar, paginar y ordenar; se ajustó responsive table.
+
+---
+
+## 6. Ordenamiento por columnas y paginación responsive sin estado `isMobile`
+
+**Objetivo:** Añadir ordenamiento (usuario, fecha, skills, score) y paginación compacta en mobile sin usar listeners de resize.
+
+**Herramienta:** Cursor (ChatGPT)
+
+### Prompt:
+
+> "podemos agregar ordenamiento a la tabla?"
+>
+> "implementemos la opción 1 cero js"
+
+**Aplicación y Ajustes:**
+
+- Se agregó estado `sort` y ordenamiento previo a la paginación.
+- Se renderizaron dos bloques de paginación con clases responsive (`hidden sm:flex` / `sm:hidden`), sin `isMobile`.
+- Se mantuvo scroll horizontal en tabla para mobile.
+
+---
+
+## 7. Acciones compactas con iconos y detalle actualizado al nuevo modelo
+
+**Objetivo:** Reintroducir botón “Ver detalles” y hacer las acciones más compactas con iconos y tooltips (`title/aria-label`), adaptando el modal al nuevo shape de candidato.
+
+**Herramienta:** Cursor (ChatGPT)
+
+### Prompt:
+
+> "el botón \"ver detalles\" lo quitaste? para las acciones usemos iconos con un tooltip en los botones para que no sean tan grandes y se mejore el diseño mobile"
+
+**Aplicación y Ajustes:**
+
+- Se integraron botones icon-only para detalle (`Eye`) y contacto (`Mail`) con `title/aria-label`.
+- `CandidateDetailModal` ahora usa `username`, `joined_at`, `skills`, `score` y formatea fecha.
+- Se mantuvo la compatibilidad con los modales existentes y el diseño mobile.
+
+---
