@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Check, Loader2 } from 'lucide-react'
 
 import { useAuthStore } from '@/store/auth-store'
+import { ThemeToggle } from '@/components/ThemeToggle'
 import { login as loginService } from '@/modules/auth/service'
 
 const LoginPage = () => {
@@ -52,7 +53,10 @@ const LoginPage = () => {
   const passwordHasError = Boolean(errors.password)
 
   return (
-    <div className='relative min-h-screen bg-gray-50 overflow-hidden'>
+    <div className='relative min-h-screen bg-background text-foreground overflow-hidden'>
+      <div className='absolute right-6 top-6 z-10'>
+        <ThemeToggle />
+      </div>
       <div
         className='pointer-events-none absolute inset-0 opacity-80'
         style={{
@@ -62,7 +66,7 @@ const LoginPage = () => {
       />
 
       <div className='relative flex min-h-screen items-center justify-center px-6 py-10'>
-        <div className='w-full max-w-lg rounded-3xl bg-white px-7 py-8 shadow-xl shadow-orange-100/70 md:px-10 md:py-10'>
+        <div className='w-full max-w-lg rounded-3xl bg-card px-7 py-8 shadow-xl shadow-orange-100/70 md:px-10 md:py-10 border border-border'>
           <div className='flex flex-col items-center text-center gap-4'>
             <div className='flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-orange-100 via-white to-orange-50 shadow-md'>
               <div className='flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-[#FF6B35] to-[#ff4f1a] text-white shadow-lg'>
@@ -70,14 +74,16 @@ const LoginPage = () => {
               </div>
             </div>
             <div>
-              <h1 className='text-3xl font-bold text-gray-900'>Iniciá sesión</h1>
-              <p className='mt-1 text-base text-gray-600'>Con tu correo electrónico y contraseña</p>
+              <h1 className='text-3xl font-bold'>Iniciá sesión</h1>
+              <p className='mt-1 text-base text-muted-foreground'>
+                Con tu correo electrónico y contraseña
+              </p>
             </div>
           </div>
 
           <form className='mt-8 space-y-6' onSubmit={handleSubmit} noValidate>
             <div className='space-y-2'>
-              <label className='block text-sm font-semibold text-gray-900' htmlFor='email'>
+              <label className='block text-sm font-semibold' htmlFor='email'>
                 Correo electrónico
               </label>
               <input
@@ -87,7 +93,7 @@ const LoginPage = () => {
                 placeholder='Ingresá tu correo'
                 value={form.email}
                 onChange={handleChange('email')}
-                className={`w-full rounded-2xl bg-white px-4 py-3 text-gray-900 placeholder:text-gray-400 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-0 ${
+                className={`w-full rounded-2xl bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground shadow-md focus:outline-none focus:ring-2 focus:ring-offset-0 ${
                   emailHasError
                     ? 'border border-red-400 focus:ring-red-500'
                     : 'border border-transparent focus:ring-orange-500'
@@ -103,7 +109,7 @@ const LoginPage = () => {
             </div>
 
             <div className='space-y-2'>
-              <label className='block text-sm font-semibold text-gray-900' htmlFor='password'>
+              <label className='block text-sm font-semibold' htmlFor='password'>
                 Contraseña
               </label>
               <input
@@ -113,7 +119,7 @@ const LoginPage = () => {
                 placeholder='Ingresá tu contraseña'
                 value={form.password}
                 onChange={handleChange('password')}
-                className={`w-full rounded-2xl bg-white px-4 py-3 text-gray-900 placeholder:text-gray-400 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-0 ${
+                className={`w-full rounded-2xl bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground shadow-md focus:outline-none focus:ring-2 focus:ring-offset-0 ${
                   passwordHasError
                     ? 'border border-red-400 focus:ring-red-500'
                     : 'border border-transparent focus:ring-orange-500'

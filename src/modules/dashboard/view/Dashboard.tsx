@@ -31,6 +31,7 @@ import ContactModal from '@/components/ContactModal'
 import CandidateDetailModal from '@/components/CandidateDetailModal'
 import { useAuthStore } from '@/store/auth-store'
 import { useCandidatesStore } from '@/store/candidates-store'
+import { ThemeToggle } from '@/components/ThemeToggle'
 
 function Dashboard() {
   const [technology, setTechnology] = React.useState<string | undefined>()
@@ -137,45 +138,43 @@ function Dashboard() {
   )
 
   return (
-    <div className='min-h-screen bg-slate-50 flex flex-col'>
-      <header className='bg-slate-900 text-white'>
+    <div className='min-h-screen bg-background text-foreground flex flex-col'>
+      <header className='bg-card text-foreground border-b border-border'>
         <div className='mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8'>
           <div className='flex items-center gap-3'>
-            <div className='flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 text-sm font-semibold uppercase tracking-tight'>
+            <div className='flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-sm font-semibold uppercase tracking-tight text-primary'>
               RC
             </div>
             <div className='flex flex-col'>
               <span className='text-base font-semibold leading-tight'>Recruiter Dashboard</span>
-              <span className='text-xs text-white/70'>Talento tech</span>
+              <span className='text-xs text-muted-foreground'>Talento tech</span>
             </div>
           </div>
-          <Button
-            variant='ghost'
-            size='sm'
-            className='text-white hover:bg-white/10'
-            onClick={logout}
-          >
-            <LogOut className='size-4' />
-            <span className='hidden sm:inline'>Cerrar sesion</span>
-          </Button>
+          <div className='flex items-center gap-3'>
+            <ThemeToggle />
+            <Button variant='ghost' size='sm' className='hover:bg-muted' onClick={logout}>
+              <LogOut className='size-4' />
+              <span className='hidden sm:inline'>Cerrar sesion</span>
+            </Button>
+          </div>
         </div>
       </header>
 
       <main className='flex-1 px-4 py-6 sm:px-6 lg:px-8'>
-        <Card className='mx-auto w-full max-w-6xl rounded-2xl border border-slate-200 bg-white shadow-lg'>
-          <CardHeader className='rounded-2xl rounded-b-none border-b border-orange-100 bg-orange-50/80'>
+        <Card className='mx-auto w-full max-w-6xl rounded-2xl border border-border bg-card shadow-lg'>
+          <CardHeader className='rounded-2xl rounded-b-none border-b border-border bg-accent/50'>
             <div className='flex flex-col gap-1'>
-              <CardTitle className='text-lg font-semibold text-slate-900'>Filtros</CardTitle>
-              <p className='text-sm text-slate-600'>Refina la busqueda por lenguaje y nivel.</p>
+              <CardTitle className='text-lg font-semibold'>Filtros</CardTitle>
+              <p className='text-sm text-muted-foreground'>Refina la busqueda por lenguaje y nivel.</p>
             </div>
             <div className='mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3'>
               <div className='flex flex-col gap-2'>
-                <span className='text-sm font-medium text-slate-700'>Lenguaje</span>
+                <span className='text-sm font-medium text-muted-foreground'>Lenguaje</span>
                 <Select
                   value={technology}
                   onValueChange={(value) => setTechnology(value === 'all' ? undefined : value)}
                 >
-                  <SelectTrigger className='w-full bg-white'>
+                  <SelectTrigger className='w-full bg-background'>
                     <SelectValue placeholder='Todos los lenguajes' />
                   </SelectTrigger>
                   <SelectContent>
@@ -189,12 +188,12 @@ function Dashboard() {
                 </Select>
               </div>
               <div className='flex flex-col gap-2'>
-                <span className='text-sm font-medium text-slate-700'>Nivel</span>
+                <span className='text-sm font-medium text-muted-foreground'>Nivel</span>
                 <Select
                   value={level}
                   onValueChange={(value) => setLevel(value === 'all' ? undefined : value)}
                 >
-                  <SelectTrigger className='w-full bg-white'>
+                  <SelectTrigger className='w-full bg-background'>
                     <SelectValue placeholder='Todos los niveles' />
                   </SelectTrigger>
                   <SelectContent>
@@ -208,25 +207,25 @@ function Dashboard() {
                 </Select>
               </div>
               <div className='flex flex-col gap-2'>
-                <span className='text-sm font-medium text-slate-700'>Buscar</span>
+                <span className='text-sm font-medium text-muted-foreground'>Buscar</span>
                 <Input
                   placeholder='Usuario'
                   value={search}
                   onChange={(event) => setSearch(event.target.value)}
-                  className='bg-white'
+                  className='bg-background'
                 />
               </div>
             </div>
           </CardHeader>
 
           <CardContent className='px-0 pb-0 pt-4 sm:px-0'>
-            <div className='overflow-x-auto rounded-2xl border border-slate-200'>
+            <div className='overflow-x-auto rounded-2xl border border-border'>
               <Table className='min-w-[720px]'>
-                <TableHeader className='bg-slate-100/60'>
+                <TableHeader className='bg-muted/60'>
                   <TableRow>
                     <TableHead className='pl-6'>
                       <button
-                        className='flex items-center gap-1 text-left font-semibold text-slate-700 hover:text-primary'
+                        className='flex items-center gap-1 text-left font-semibold text-foreground hover:text-primary'
                         onClick={() =>
                           setSort((prev) =>
                             prev.field === 'username'
@@ -244,7 +243,7 @@ function Dashboard() {
                     </TableHead>
                     <TableHead>
                       <button
-                        className='flex items-center gap-1 text-left font-semibold text-slate-700 hover:text-primary'
+                        className='flex items-center gap-1 text-left font-semibold text-foreground hover:text-primary'
                         onClick={() =>
                           setSort((prev) =>
                             prev.field === 'joined_at'
@@ -262,7 +261,7 @@ function Dashboard() {
                     </TableHead>
                     <TableHead>
                       <button
-                        className='flex items-center gap-1 text-left font-semibold text-slate-700 hover:text-primary'
+                        className='flex items-center gap-1 text-left font-semibold text-foreground hover:text-primary'
                         onClick={() =>
                           setSort((prev) =>
                             prev.field === 'language'
@@ -280,7 +279,7 @@ function Dashboard() {
                     </TableHead>
                     <TableHead>
                       <button
-                        className='flex items-center gap-1 text-left font-semibold text-slate-700 hover:text-primary'
+                        className='flex items-center gap-1 text-left font-semibold text-foreground hover:text-primary'
                         onClick={() =>
                           setSort((prev) =>
                             prev.field === 'score'
@@ -302,7 +301,7 @@ function Dashboard() {
                 <TableBody>
                   {loading && (
                     <TableRow>
-                      <TableCell colSpan={5} className='py-6 text-center text-slate-600'>
+                      <TableCell colSpan={5} className='py-6 text-center text-muted-foreground'>
                         Cargando usuarios...
                       </TableCell>
                     </TableRow>
@@ -310,7 +309,7 @@ function Dashboard() {
 
                   {!loading && error && (
                     <TableRow>
-                      <TableCell colSpan={5} className='py-6 text-center text-red-600'>
+                      <TableCell colSpan={5} className='py-6 text-center text-destructive'>
                         {error}
                       </TableCell>
                     </TableRow>
@@ -318,7 +317,7 @@ function Dashboard() {
 
                   {!loading && !error && paginatedCandidates.length === 0 && (
                     <TableRow>
-                      <TableCell colSpan={5} className='py-6 text-center text-slate-600'>
+                      <TableCell colSpan={5} className='py-6 text-center text-muted-foreground'>
                         No hay usuarios que coincidan con tu busqueda.
                       </TableCell>
                     </TableRow>
@@ -331,7 +330,7 @@ function Dashboard() {
                       const remaining = candidate.skills.length - visibleSkills.length
 
                       return (
-                        <TableRow key={candidate.username} className='hover:bg-orange-50/60'>
+                        <TableRow key={candidate.username} className='hover:bg-muted/60'>
                           <TableCell className='pl-6'>
                             <div className='flex items-center gap-3'>
                               <Avatar className='h-11 w-11'>
@@ -340,16 +339,14 @@ function Dashboard() {
                                 </AvatarFallback>
                               </Avatar>
                               <div className='flex flex-col'>
-                                <span className='text-sm font-semibold text-slate-900'>
-                                  {candidate.username}
-                                </span>
-                                <span className='text-xs text-slate-500'>
+                                <span className='text-sm font-semibold'>{candidate.username}</span>
+                                <span className='text-xs text-muted-foreground'>
                                   Miembro desde {formatDate(candidate.joined_at)}
                                 </span>
                               </div>
                             </div>
                           </TableCell>
-                          <TableCell className='text-slate-700'>
+                          <TableCell className='text-muted-foreground'>
                             {formatDate(candidate.joined_at)}
                           </TableCell>
                           <TableCell>
@@ -358,26 +355,20 @@ function Dashboard() {
                                 <Badge
                                   key={`${candidate.username}-${skill.language}-${skill.level}`}
                                   variant='secondary'
-                                  className='bg-orange-50 text-slate-800'
+                                  className='bg-accent text-foreground'
                                 >
                                   {skill.language} ({skill.level})
                                 </Badge>
                               ))}
                               {remaining > 0 && (
-                                <Badge
-                                  variant='outline'
-                                  className='border-orange-200 bg-orange-50 text-primary'
-                                >
+                                <Badge variant='outline' className='border-primary/40 text-primary'>
                                   +{remaining}
                                 </Badge>
                               )}
                             </div>
                           </TableCell>
                           <TableCell>
-                            <Badge
-                              variant='outline'
-                              className='border-primary/40 bg-orange-50 text-primary'
-                            >
+                            <Badge variant='outline' className='border-primary/40 text-primary'>
                               {candidate.score}
                             </Badge>
                           </TableCell>
@@ -389,7 +380,7 @@ function Dashboard() {
                                   <Button
                                     variant='outline'
                                     size='icon'
-                                    className='border-primary/40 text-primary hover:border-primary hover:text-primary'
+                                    className='border-border text-foreground hover:border-primary hover:text-primary'
                                     title='Ver detalles'
                                     aria-label='Ver detalles'
                                   >

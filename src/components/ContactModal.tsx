@@ -81,12 +81,12 @@ function ContactModal({ trigger, isOpen, onClose, onOpenChange }: ContactModalPr
       subtitle='Para comenzar a operar.'
     >
       <div className='flex justify-center pb-2'>
-        <div className='flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 text-primary'>
+        <div className='flex h-12 w-12 items-center justify-center rounded-full bg-accent text-primary'>
           <Mail className='size-6' aria-hidden />
         </div>
       </div>
 
-      <div className='rounded-lg bg-orange-50/90 p-4 shadow-[0_8px_20px_rgba(0,0,0,0.04)] sm:p-5'>
+      <div className='rounded-lg bg-card border border-border p-4 shadow-[0_8px_20px_rgba(0,0,0,0.04)] sm:p-5'>
         <Form {...form}>
           <form className='space-y-4' onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
@@ -96,7 +96,11 @@ function ContactModal({ trigger, isOpen, onClose, onOpenChange }: ContactModalPr
                 <FormItem>
                   <FormLabel>Mensaje</FormLabel>
                   <FormControl>
-                    <Textarea placeholder='Ingresá tu mensaje...' className='bg-white' {...field} />
+                    <Textarea
+                      placeholder='Ingresá tu mensaje...'
+                      className='bg-background text-foreground'
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -111,7 +115,7 @@ function ContactModal({ trigger, isOpen, onClose, onOpenChange }: ContactModalPr
                   <FormLabel>Rol a proponer</FormLabel>
                   <FormControl>
                     <Select onValueChange={field.onChange} value={field.value}>
-                      <SelectTrigger className='w-full bg-white'>
+                      <SelectTrigger className='w-full bg-background'>
                         <SelectValue placeholder='Seleccioná un rol' />
                       </SelectTrigger>
                       <SelectContent>
