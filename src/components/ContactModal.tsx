@@ -128,8 +128,8 @@ function ContactModal({ trigger, isOpen, onClose, onOpenChange }: ContactModalPr
                             loadingRoles
                               ? 'Cargando roles...'
                               : hasRoles
-                                ? 'Seleccioná un rol'
-                                : 'No hay roles disponibles'
+                              ? 'Seleccioná un rol'
+                              : 'No hay roles disponibles'
                           }
                         />
                       </SelectTrigger>
@@ -144,13 +144,14 @@ function ContactModal({ trigger, isOpen, onClose, onOpenChange }: ContactModalPr
                             Error al cargar roles
                           </SelectItem>
                         )}
-                        {!loadingRoles && !rolesError && hasRoles && (
+                        {!loadingRoles &&
+                          !rolesError &&
+                          hasRoles &&
                           roles.map((role) => (
                             <SelectItem key={role} value={role}>
                               {role}
                             </SelectItem>
-                          ))
-                        )}
+                          ))}
                         {!loadingRoles && !rolesError && !hasRoles && (
                           <SelectItem disabled value='__empty'>
                             No hay roles disponibles
