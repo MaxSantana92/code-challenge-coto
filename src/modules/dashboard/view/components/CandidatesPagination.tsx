@@ -10,11 +10,9 @@ import {
 type CandidatesPaginationProps = {
   currentPage: number
   totalPages: number
-  pages: number[]
   totalItems: number
   displayedItems: number
   filteredItems: number
-  onPageChange: (page: number) => void
   onNextPage: () => void
   onPrevPage: () => void
 }
@@ -22,11 +20,9 @@ type CandidatesPaginationProps = {
 export function CandidatesPagination({
   currentPage,
   totalPages,
-  pages,
   totalItems,
   displayedItems,
   filteredItems,
-  onPageChange,
   onNextPage,
   onPrevPage,
 }: CandidatesPaginationProps) {

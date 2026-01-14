@@ -1,7 +1,7 @@
 import { Home, Search } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { PATHS } from '@/routes'
-import { Button } from './ui/button'
+import { Button } from '../ui/button'
 
 export function NotFound() {
   return (

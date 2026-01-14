@@ -1,9 +1,9 @@
 import { LogOut } from 'lucide-react'
-import { ThemeToggle } from '@/components/ThemeToggle'
+import { ThemeToggle } from '@/components/layout'
 import { Button } from '@/components/ui/button'
 import { useAuthStore } from '@/store/auth-store'
 
-export function DashboardHeader() {
+export function Header() {
   const logout = useAuthStore((s) => s.logout)
 
   return (

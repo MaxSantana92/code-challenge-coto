@@ -1,14 +1,10 @@
 ﻿import React from 'react'
+import { Header } from '@/components/layout'
 import { Card } from '@/components/ui/card'
 import { ensureArray } from '@/lib/utils'
 import { useCandidatesStore } from '@/store/candidates-store'
 import { useCandidateFilters, useCandidateSorting, usePagination } from '../hooks'
-import {
-  CandidateFilters,
-  CandidatesPagination,
-  CandidatesTable,
-  DashboardHeader,
-} from './components'
+import { CandidateFilters, CandidatesPagination, CandidatesTable } from './components'
 
 function Dashboard() {
   // Store
@@ -43,16 +39,14 @@ function Dashboard() {
   const {
     page,
     totalPages,
-    pages,
     paginatedItems: paginatedCandidates,
-    setPage,
     nextPage,
     prevPage,
   } = usePagination(sortedCandidates, { pageSize: 5 })
 
   return (
     <div className='min-h-screen bg-background text-foreground flex flex-col'>
-      <DashboardHeader />
+      <Header />
 
       <main className='flex-1 px-4 py-6 sm:px-6 lg:px-8'>
         <Card className='mx-auto w-full max-w-6xl rounded-2xl border border-border bg-card shadow-lg'>
@@ -78,11 +72,9 @@ function Dashboard() {
           <CandidatesPagination
             currentPage={page}
             totalPages={totalPages}
-            pages={pages}
             totalItems={safeCandidates.length}
             displayedItems={paginatedCandidates.length}
             filteredItems={sortedCandidates.length}
-            onPageChange={setPage}
             onNextPage={nextPage}
             onPrevPage={prevPage}
           />

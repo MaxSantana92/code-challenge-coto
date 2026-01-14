@@ -1,7 +1,7 @@
 import { Check, Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ThemeToggle } from '@/components/ThemeToggle'
+import { ThemeToggle } from '@/components/layout'
 import { login as loginService } from '@/modules/auth/service'
 import { useAuthStore } from '@/store/auth-store'
 import { useRolesStore } from '@/store/roles-store'

@@ -5,7 +5,7 @@ type ThemeProviderProps = {
 }
 
 // Proveedor de tema que aplica la clase "dark" al html para soportar temas en Tailwind
-const ThemeProvider = ({ children }: ThemeProviderProps) => {
+export function ThemeProvider({ children }: ThemeProviderProps) {
   return (
     <NextThemesProvider
       attribute='class'
@@ -17,5 +17,3 @@ const ThemeProvider = ({ children }: ThemeProviderProps) => {
     </NextThemesProvider>
   )
 }
-
-export { ThemeProvider }

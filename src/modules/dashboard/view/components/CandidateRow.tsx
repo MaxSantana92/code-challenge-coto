@@ -1,5 +1,4 @@
 import { Eye, Mail } from 'lucide-react'
-import CandidateDetailModal from '@/components/CandidateDetailModal'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -7,6 +6,7 @@ import { TableCell, TableRow } from '@/components/ui/table'
 import { formatDate } from '@/lib/utils'
 import ContactModal from '@/modules/messages/view/ContactModal'
 import type { Candidate } from '../../model'
+import { CandidateDetailModal } from './CandidateDetailModal'
 
 type CandidateRowProps = {
   candidate: Candidate
