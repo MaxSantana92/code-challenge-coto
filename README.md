@@ -22,7 +22,9 @@ Este proyecto sigue una arquitectura modular basada en features:
 
 ```
 src/
-├── api/                    # Configuración de Axios
+├── api/                    
+|   ├── index.ts            # Configuración de Axios
+|   ├── endpoints.ts        # constantes de endpoints
 ├── components/             # Componentes compartidos
 │   ├── layout/            # Componentes de layout (Header, Theme)
 │   ├── feedback/          # Loading, toasts, etc.
@@ -85,6 +87,7 @@ npm run preview
 
 Cada módulo sigue el patrón **Model-Service-View**:
 
+- **Hooks**: Lógica reutilizable
 - **Model**: Tipos TypeScript y definiciones de datos
 - **Service**: Lógica de negocio y llamadas a API
 - **View**: Componentes de React y UI
