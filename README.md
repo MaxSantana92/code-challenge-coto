@@ -238,6 +238,29 @@ git checkout develop && git merge hotfix/nombre
 
 Ver [docs/PERFORMANCE.md](docs/PERFORMANCE.md) para más detalles.
 
+## 🚀 Deployment
+
+### GitHub Actions + GitHub Pages
+
+El proyecto está configurado con un pipeline de CI/CD automatizado:
+
+**Configuración:**
+- ✅ **Pipeline**: `.github/workflows/deploy.yml`
+- ✅ **Trigger**: Push a rama `main`
+- ✅ **Build**: `npm run build`
+- ✅ **Deploy**: Automático a GitHub Pages
+- ✅ **URL**: [https://maxsantana92.github.io/code-challenge-coto](https://maxsantana92.github.io/code-challenge-coto)
+
+**Flujo de deployment:**
+```
+PR y merge a main → GitHub Actions → Build → Deploy a GitHub Pages
+```
+
+**Configuraciones importantes:**
+- `vite.config.ts`: Base path configurado para GitHub Pages
+- `package.json`: Homepage URL configurada
+- `HashRouter`: Usado en lugar de BrowserRouter para compatibilidad con GitHub Pages
+
 ## 📚 Documentación
 
 Toda la documentación está centralizada en la carpeta [`docs/`](docs/):
