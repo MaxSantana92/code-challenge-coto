@@ -30,7 +30,7 @@ export function CandidateFilters({
   onSearchChange,
 }: CandidateFiltersProps) {
   return (
-    <CardHeader className='rounded-2xl rounded-b-none border-b border-border bg-accent/50'>
+    <CardHeader className='py-6 rounded-2xl rounded-b-none border-b border-border bg-accent/50'>
       <div className='flex flex-col gap-1'>
         <CardTitle className='text-lg font-semibold'>Filtros</CardTitle>
         <p className='text-sm text-muted-foreground'>Refina la búsqueda por lenguaje y nivel.</p>
