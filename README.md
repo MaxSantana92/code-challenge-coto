@@ -170,6 +170,62 @@ Recomendamos instalar la extensión [Biome VSCode](https://marketplace.visualstu
 - Linting en tiempo real
 - Organización automática de imports
 
+## 🌳 Git Flow y Control de Versiones
+
+Este proyecto utiliza una estrategia de **Git Flow** con dos ramas principales y ramas temporales para features, releases y hotfixes.
+
+**Ramas permanentes:**
+- `main` → Producción estable (tags: v1.0.0, v1.1.0...)
+- `develop` → Integración de desarrollo
+
+**Ramas temporales:**
+- `feature/*` → Desde develop, PR a develop
+- `release/*` → Desde develop, PR a main (merge back a develop)
+- `bugfix/*` → Desde release, PR a release
+- `hotfix/*` → Desde main, merge a main y develop
+
+### Convenciones de Commits
+
+```bash
+feat(scope): descripción    # Nueva funcionalidad
+fix(scope): descripción     # Corrección de bug
+docs(scope): descripción    # Cambios en documentación
+refactor(scope): descripción # Refactorización
+perf(scope): descripción    # Mejora de performance
+test(scope): descripción    # Tests
+update(deps): descripción   # Actualización de dependencias
+release: descripción        # Preparación de release
+```
+
+### Flujo Rápido
+
+```bash
+# Crear feature
+git checkout develop && git pull
+git checkout -b feature/nombre
+# ... trabajo ...
+git push origin feature/nombre
+# PR a develop
+
+# Crear release
+git checkout develop && git pull
+git checkout -b release/v1.0.0
+# Actualizar version
+git push origin release/v1.0.0
+# PR a main, luego merge back a develop
+
+# Hotfix urgente
+git checkout main && git pull
+git checkout -b hotfix/nombre
+# ... fix ...
+git checkout main && git merge hotfix/nombre
+git checkout develop && git merge hotfix/nombre
+```
+
+**Ver documentación completa:** [docs/GIT_FLOW.md](docs/GIT_FLOW.md)
+
+---
+
 ## ⚡ Performance
 
 - **Lazy Loading**: Todas las rutas se cargan de forma diferida
@@ -185,6 +241,7 @@ Toda la documentación está centralizada en la carpeta [`docs/`](docs/):
 
 | Documento | Descripción |
 |-----------|-------------|
+| [GIT_FLOW.md](docs/GIT_FLOW.md) | 🌳 Guía completa de Git Flow con develop, release y hotfix |
 | [DEPENDENCIES_AND_LIBRARIES.md](docs/DEPENDENCIES_AND_LIBRARIES.md) | 📦 Stack completo y justificación de tecnologías |
 | [ROUTES.md](docs/ROUTES.md) | 🛣️ Configuración de rutas, guards y lazy loading |
 | [STORES.md](docs/STORES.md) | 📦 Gestión de estado con Zustand y DevTools |

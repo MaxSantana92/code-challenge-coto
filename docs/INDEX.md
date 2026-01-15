@@ -11,6 +11,12 @@ Bienvenido a la documentación del proyecto. Aquí encontrarás toda la informac
 | [REFACTOR_DASHBOARD.md](REFACTOR_DASHBOARD.md) | Refactorización del Dashboard | Hooks personalizados, componentes modulares, reducción de 507 a 96 líneas |
 | [../REFACTORING_SUMMARY.md](../REFACTORING_SUMMARY.md) | Resumen general | Métricas, patrones aplicados, beneficios |
 
+### 🌳 Control de Versiones
+
+| Documento | Descripción | Contenido Clave |
+|-----------|-------------|-----------------|
+| [GIT_FLOW.md](GIT_FLOW.md) | Git Flow completo | Ramas, commits, PRs, releases, hotfixes, ejemplos prácticos |
+
 ### 🛣️ Rutas y Navegación
 
 | Documento | Descripción | Contenido Clave |
@@ -100,9 +106,10 @@ src/
 
 1. **Empezar aquí:** [README.md](../README.md) - Configuración inicial
 2. **Stack técnico:** [DEPENDENCIES_AND_LIBRARIES.md](DEPENDENCIES_AND_LIBRARIES.md) - Tecnologías usadas
-3. **Entender la arquitectura:** [REFACTOR_DASHBOARD.md](REFACTOR_DASHBOARD.md)
-4. **Aprender sobre rutas:** [ROUTES.md](ROUTES.md)
-5. **Gestión de estado:** [STORES.md](STORES.md)
+3. **Git Flow:** [GIT_FLOW.md](GIT_FLOW.md) - Estrategia completa de branching, commits y releases
+4. **Entender la arquitectura:** [REFACTOR_DASHBOARD.md](REFACTOR_DASHBOARD.md)
+5. **Aprender sobre rutas:** [ROUTES.md](ROUTES.md)
+6. **Gestión de estado:** [STORES.md](STORES.md)
 
 ### Para Agregar Funcionalidad
 
@@ -162,8 +169,10 @@ Para una lista completa con justificaciones y comparaciones, ver [DEPENDENCIES_A
 - React Hook Form
 - Zod (validación)
 
-### Code Quality
+### Code Quality & Workflow
 - Biome (linting + formatting)
+- Git Flow (control de versiones - ver [README.md](../README.md#-git-flow-y-control-de-versiones))
+- Conventional Commits
 
 ---
 
