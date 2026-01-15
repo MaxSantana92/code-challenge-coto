@@ -4,5 +4,5 @@ export const ENDPOINT = {
   MESSAGES: '/messages',
 } as const
 
-export type EndpointKey = keyof typeof ENDPOINTS
-export type EndpointValue = (typeof ENDPOINTS)[EndpointKey]
+export type EndpointKey = keyof typeof ENDPOINT
+export type EndpointValue = (typeof ENDPOINT)[EndpointKey]
