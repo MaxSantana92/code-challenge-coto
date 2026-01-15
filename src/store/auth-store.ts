@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
+import { devtools, persist } from 'zustand/middleware'
 
 type AuthState = {
   user: { email: string } | null
@@ -9,13 +9,16 @@ type AuthState = {
 }
 
 export const useAuthStore = create<AuthState>()(
-  persist(
-    (set) => ({
-      user: null,
-      token: null,
-      setSession: (user, token) => set({ user, token }),
-      logout: () => set({ user: null, token: null }),
-    }),
-    { name: 'auth-store' }
+  devtools(
+    persist(
+      (set) => ({
+        user: null,
+        token: null,
+        setSession: (user, token) => set({ user, token }),
+        logout: () => set({ user: null, token: null }),
+      }),
+      { name: 'auth-store' }
+    ),
+    { name: 'Auth Store' }
   )
 )

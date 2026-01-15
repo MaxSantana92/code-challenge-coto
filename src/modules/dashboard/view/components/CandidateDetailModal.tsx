@@ -4,14 +4,14 @@ import type React from 'react'
 import ModalShell from '@/components/ModalShell'
 import { Badge } from '@/components/ui/badge'
 import { formatDate } from '@/lib/utils'
-import type { Candidate } from '@/modules/dashboard/model'
+import type { Candidate } from '../../model'
 
 type CandidateDetailModalProps = {
   candidate: Candidate
   trigger: React.ReactNode
 }
 
-function CandidateDetailModal({ candidate, trigger }: CandidateDetailModalProps) {
+export function CandidateDetailModal({ candidate, trigger }: CandidateDetailModalProps) {
   const firstSkill = candidate.skills[0]
 
   return (
@@ -71,5 +71,3 @@ function CandidateDetailModal({ candidate, trigger }: CandidateDetailModalProps)
     </ModalShell>
   )
 }
-
-export default CandidateDetailModal

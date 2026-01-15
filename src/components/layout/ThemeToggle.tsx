@@ -6,7 +6,7 @@ type ThemeToggleProps = {
   className?: string
 }
 
-const ThemeToggle = ({ className = '' }: ThemeToggleProps) => {
+export function ThemeToggle({ className = '' }: ThemeToggleProps) {
   const { theme, setTheme, systemTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
 
@@ -31,5 +31,3 @@ const ThemeToggle = ({ className = '' }: ThemeToggleProps) => {
     </button>
   )
 }
-
-export { ThemeToggle }
